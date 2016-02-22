@@ -1,0 +1,32 @@
+/* 
+    Document   : style
+    Created on : Feb 17, 2016, 10:15:00 AM
+    Author     : 1034834
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.navbar-default .navbar-nav>li>a {
+                color: #fff;
+            }
+            .navbar-default .navbar-brand {
+                color: #fff;
+            }
+            #hi {
+                color: #fff;
+                text-decoration: none;
+            }
+            .navbar-default .navbar-text {
+                color: #337ab7;
+            }
+            .dropdown-menu {
+                min-width: 120px;
+                text-align: center;
+            }
+            label {
+                display: inline-block;
+                max-width: 100%;
+                margin-bottom: 5px;
+                font-weight: inherit;
+            }
+

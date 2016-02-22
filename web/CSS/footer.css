@@ -1,0 +1,81 @@
+/* 
+    Document   : footer
+    Created on : Oct 8, 2014, 11:19:28 AM
+    Author     : 786849
+    Description:
+        Purpose of the stylesheet follows.
+
+
+root { 
+    display: block;
+}
+ Sticky footer styles
+-------------------------------------------------- 
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+     Margin bottom by footer height 
+    margin-bottom: 40px;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+     Set the fixed height of the footer here 
+    height: 50px;
+}
+
+
+ Custom page CSS
+-------------------------------------------------- 
+ Not required for template or sticky footer method. 
+
+body > .container {
+    padding: 40px 15px 0;
+}
+.container .text-muted {
+    margin: 20px 0;
+}
+
+.footer > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+code {
+    font-size: 80%;
+}
+
+#push{
+    height:40px;
+}*/
+
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    color:#fff;
+    padding: 18px 12px;
+    background: #3D4C53;
+    text-align: center;
+}
+
+.footer  a{
+    color: #F2C249;
+    padding: 0px 7px;
+}

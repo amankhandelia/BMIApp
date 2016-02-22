@@ -1,0 +1,109 @@
+.nopadding{
+    padding: 0;
+}
+body{
+    background: #E7E5E2;
+}
+.wrapper{
+    padding: 14px;
+    padding-right: 0px;
+}
+.sidebar{
+    background: #fff;
+}
+
+
+
+.tab-ul{
+    background: #3F7EB3;
+    background: #207BD3;
+    color: #fff;
+    border-bottom: 4px solid #0DAD88;
+}
+.tab-ul li a{
+    color:#fff !important;
+    padding: 14px;
+    font-size: 14px;
+    margin: 0px;
+    border-radius: 0px;
+}
+.panel-right .tab-ul li a span.glyphicon{
+    margin-right: 2px;
+    margin-top: 2px;
+    top: 2px;
+}
+.tab-ul li a:hover,.tab-ul li a:focus{
+    background: rgba(0,0,0,0.2);
+    border-color: rgba(0,0,0,0.2);
+}
+.tab-ul li.active a,.tab-ul li.active:hover a,.tab-ul li.active:focus a{
+    background-color: #0DAD88 !important;
+    border: 1px solid #0DAD88 !important;
+    color: #FDFDFD;
+    cursor: pointer;
+}
+
+/*
+/*
+
+Change max and  min height of tree nodes panel
+
+*/
+.iotabs-content{
+    padding: 14px 10px;
+    border-left: 1px solid #0DAD88;
+    border-right: 1px solid #0DAD88;
+}
+
+#tabpanel{
+    border-bottom: 2px solid #0DAD88;
+    background: #fff;
+}
+#tabpanel ul.tab-ul li a span.remov{
+    color: #098266;
+    left: 3px;
+}
+#tabpanel ul.tab-ul li a:hover span.remov{
+    color:#077158;
+}
+#tabpanel ul.tab-ul li a span.glyphicon{
+    font-size: 15px;
+}
+
+.loader-overlay{
+    position:fixed;
+    height: 100%;
+    background: rgba(0,0,0,0.3);
+    top: 0px;
+    width: 100%;
+}
+
+.windows8{
+    display: none;
+}
+
+table {
+    table-layout: fixed;
+    word-wrap: break-word;
+}
+table th {
+    text-align: center;
+}
+table tr {
+    text-align: center;
+}
+table1 {
+    table-layout: fixed;
+    word-wrap: break-word;
+}
+table1 th {
+    width: auto !important;
+    text-align: center;
+}
+table1 tr {
+    text-align: center;
+}
+.section-card{
+    height:100px;
+    background-color: black;
+}
