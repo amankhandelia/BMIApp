@@ -5,20 +5,47 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!--        <noscript>
-        <meta http-equiv="refresh" content="1; url=JSDisableErrorPage.jsp">
-        </noscript>-->
+        <!--        <noscript>
+                <meta http-equiv="refresh" content="1; url=JSDisableErrorPage.jsp">
+                </noscript>-->
         <title>TCS iGnite</title>
         <%@include file="util.jsp" %>
-<!--        <script type="text/javascript" language="javascript" src="JS/DataTable1.js"></script>
-        <script type="text/javascript" language="javascript" src="JS/DataTable2.js"></script>-->
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
         <link href="CSS/Landing.css" rel="stylesheet" />
+        <link rel="stylesheet" href="Assets/styles/toastr.min.css">
         <link rel="stylesheet" href="CSS/DataTable.css"/>
+        <style>
+            .navbar-default .navbar-nav>li>a {
+                color: #fff;
+            }
+            .navbar-default .navbar-brand {
+                color: #fff;
+            }
+            #hi {
+                color: #fff;
+                text-decoration: none;
+            }
+            .navbar-default .navbar-text {
+                color: #337ab7;
+            }
+            .dropdown-menu {
+                min-width: 120px;
+                text-align: center;
+            }
+            label {
+                display: inline-block;
+                max-width: 100%;
+                margin-bottom: 5px;
+                font-weight: inherit;
+            }
+        </style>
     </head>
     <body>
-        <%--<c:set var="active" value="history"/>--%>
-        
+        <c:if test="${empty sessionScope.employeeId}">
+            <c:redirect url="login.jsp"/>
+        </c:if>
+        <c:set var="active" value="bmi"/>
+
         <%@include file="HeaderAfterLogin.jsp" %>
         <div class="container" style="padding-top: 81px;">
             <div class="row wrapper">
@@ -134,29 +161,8 @@
                     "showMethod": "fadeIn",
                     "hideMethod": "fadeOut"
                 };
-
-                var entertable = $('#traineeTable').DataTable({
-//                    "columnDefs": [
-//                        {"width": "10%", "targets": 0},
-//                        {"width": "15%", "targets": 1},
-//                        {"width": "20%", "targets": 2},
-//                        {"width": "15%", "targets": 3},
-//                        {"width": "15%", "targets": 4},
-//                        {"width": "10%", "targets": 5},
-//                        {"width": "15%", "targets": 6}
-//                    ]
-                });
-                var editTable = $('#traineeEditDataTable').DataTable({
-//                    "columnDefs": [
-//                        {"width": "5%", "targets": 0},
-//                        {"width": "10%", "targets": 1},
-//                        {"width": "20%", "targets": 2},
-//                        {"width": "20%", "targets": 3},
-//                        {"width": "20%", "targets": 4},
-//                        {"width": "10%", "targets": 5},
-//                        {"width": "15%", "targets": 6}
-//                    ]
-                });
+                var entertable = $('#traineeTable').DataTable();
+                var editTable = $('#traineeEditDataTable').DataTable();
                 $.ajax({
                     url: 'TraineeDetail',
                     method: 'GET',
@@ -221,6 +227,24 @@
                         toastr.error("Only decimal value is allowed");
                         return;
                     }
+                    var value = $(this).val();
+                    if (value.indexOf('.') !== -1) {
+                        if (value.substring(value.indexOf('.'), value.length).length + 1 > 3 || value.substring(0, value.indexOf('.')).length > 4) {
+                            event.preventDefault();
+                            toastr.error("Above permissible limit");
+                            return;
+                        } else if (event.which === 46) {
+                            event.preventDefault();
+                            toastr.error("Invalid Format");
+                            return;
+                        }
+                    } else {
+                        if (event.which !== 46 && $(this).val().length + 1 > 3 ) {
+                            event.preventDefault();
+                            toastr.error("Above permissible limit");
+                            return;
+                        }
+                    }
                     if ($(this).parents("tr").find('input[placeholder^="Centimeters"]').val().length !== 0) {
                         $(this).parents("tr").find('input[value^="Submit"]').removeAttr("disabled");
                         var bmi = calculateBMI($(this).parents("tr").find('input[placeholder^="Kilograms"]').val() + String.fromCharCode(event.which), $(this).parents("tr").find('input[placeholder^="Centimeters"]').val());
@@ -264,6 +288,11 @@
                     if (!((event.which >= 48 && event.which <= 57) || (event.which === 8))) {
                         event.preventDefault();
                         toastr.error("Only numeric value is allowed");
+                        return;
+                    }
+                    if ($(this).val().length + 1 > 3) {
+                        event.preventDefault();
+                        toastr.error("Above permissible limit");
                         return;
                     }
                     if ($(this).parents("tr").find('input[placeholder^="Kilograms"]').val().length !== 0) {
@@ -366,7 +395,7 @@
             });
         </script>
         <!--   Data Tables --->
-        
+
 
     </body>
 </html>

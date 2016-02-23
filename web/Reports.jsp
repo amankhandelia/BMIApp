@@ -9,7 +9,7 @@
                 <meta http-equiv="refresh" content="1; url=JSDisableErrorPage.jsp">
                 </noscript>-->
         <title>TCS iGnite</title>
-        <%@include file="util.jsp" %>
+       
         <script type="text/javascript" language="javascript" src="JS/DataTable1.js"></script>
         <script type="text/javascript" language="javascript" src="JS/DataTable2.js"></script>
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="CSS/DataTable.css"/>
     </head>
     <body>
-        <%--<c:set var="active" value="history"/>--%>
+      <c:set var="active" value="reports"/>
         <%@include file="HeaderAfterLogin.jsp" %>
         <div class="container" style="padding-top: 81px;">
             <div class="row wrapper">
