@@ -5,7 +5,7 @@
 package com.tcs.ignite.bmiapp.actions;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import com.tcs.ignite.bmiapp.beans.BmiDetails;
 import com.tcs.ignite.bmiapp.beans.Response;
 import com.tcs.ignite.bmiapp.beans.TraineeDetails;
@@ -14,9 +14,7 @@ import com.tcs.ignite.bmiapp.beans.UserDetails;
 import com.tcs.ignite.bmiapp.managers.BmiManager;
 import com.tcs.ignite.bmiapp.managers.TraineeManager;
 import com.tcs.ignite.bmiapp.managers.UserManager;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import javax.servlet.ServletException;
@@ -69,33 +67,46 @@ public class SubmitBMIServlet extends HttpServlet {
 //        processRequest(request, response);
         PrintWriter out = response.getWriter();
         String input = request.getParameter("myData");
+        String output;
         System.out.println(input);
         Gson gson = new Gson();
-        UserData userData = gson.fromJson(input, UserData.class);
-        String employeeId = (String) request.getSession(false).getAttribute("employeeId");
-        UserManager userManager = new UserManager();
-        UserDetails userDetails = userManager.getUserByEmployeeId(employeeId);
-        TraineeDetails traineeDetails = new TraineeManager().getTraineeByIgniteId(userData.getIgniteId());
-        BmiDetails bmiDetails = new BmiDetails();
-        bmiDetails.setTraineedetailsID(traineeDetails);
-        bmiDetails.setUserdetailsID(userDetails);
-        bmiDetails.setWeight(new BigDecimal(userData.getWeight()));
-        bmiDetails.setHeight(new BigDecimal(userData.getHeight()));
-        double height = userData.getHeight() / 100.0;
-        double bmi = userData.getWeight() / (height * height);
-        bmi = Math.round(bmi * 100) / 100.0;
-        bmiDetails.setBmi(new BigDecimal(bmi));
-        response.setCharacterEncoding("UTF-8");
+        UserData userData;
         Response myResponse = new Response();
-        BmiManager bmiManager = new BmiManager();
-        bmiManager.checkBMI(bmiDetails);
-        if (bmiManager.saveBMI(bmiDetails) && bmiDetails.getId() != null) {
-            myResponse.setResponse("success");
-        } else {
+        try {
+            userData = gson.fromJson(input, UserData.class);
+            String employeeId = (String) request.getSession(false).getAttribute("employeeId");
+            UserManager userManager = new UserManager();
+            UserDetails userDetails = userManager.getUserByEmployeeId(employeeId);
+            TraineeDetails traineeDetails = new TraineeManager().getTraineeByIgniteId(userData.getIgniteId());
+            BmiDetails bmiDetails = new BmiDetails();
+            bmiDetails.setTraineedetailsID(traineeDetails);
+            bmiDetails.setUserdetailsID(userDetails);
+            bmiDetails.setWeight(new BigDecimal(userData.getWeight()));
+            bmiDetails.setHeight(new BigDecimal(userData.getHeight()));
+            double height = userData.getHeight() / 100.0;
+            double bmi = userData.getWeight() / (height * height);
+            bmi = Math.round(bmi * 100) / 100.0;
+            bmiDetails.setBmi(new BigDecimal(bmi));
+            response.setCharacterEncoding("UTF-8");
+            BmiManager bmiManager = new BmiManager();
+            bmiManager.checkBMI(bmiDetails);
+            if (userData.getHeight() % 1 != 0) {
+                myResponse.setResponse("failed");
+                output = gson.toJson(myResponse);
+                out.println(output);
+            }
+            if (bmiManager.saveBMI(bmiDetails) && bmiDetails.getId() != null) {
+                myResponse.setResponse("success");
+            } else {
+                myResponse.setResponse("failed");
+            }
+        } catch (JsonSyntaxException exception) {
             myResponse.setResponse("failed");
+        } finally {
+            output = gson.toJson(myResponse);
+            out.println(output);
         }
-        String output = gson.toJson(myResponse);
-        out.println(output);
+
     }
 
     /**

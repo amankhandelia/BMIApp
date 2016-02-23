@@ -187,7 +187,7 @@
                         success: function(resp) {
                             var aData = JSON.parse(resp);
                             store = aData;
-                            console.log(aData);
+//                            console.log(aData);
                             var bmi = "<label for='bmi' title='Body Mass Index'>", endBmi = "</label>";
 //                                    weight = "<input disabled style='width: 100%;' class='form-control' type='text' placeholder='Kilograms' name='weight' value ='", endWeight = "'>", height = "<input style='width: 100%;' class='form-control' type='text' disabled placeholder='Centimeters' name='height' value ='", endHeight = "'>";
                             var weight = "<label title='Kilograms'>", endWeight = "</label>", height = "<label title='Centimeters'>", endHeight = "</label>";

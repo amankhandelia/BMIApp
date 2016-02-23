@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String success = "home.jsp";
+        String success = "home.jsp", failure = "login.jsp";
         HttpSession session;
         try {
             String employeeId = request.getParameter("employeeid"), password = request.getParameter("password");
@@ -46,16 +46,20 @@ public class LoginServlet extends HttpServlet {
             userDetails.setPassword(password);
             UserManager userManager = new UserManager();
             UserDetails myUserDetails = userManager.matchPassword(userDetails);
-            if(myUserDetails != null){
+            if (myUserDetails != null) {
                 session = request.getSession(true);
                 session.setAttribute("name", myUserDetails.getName());
                 session.setAttribute("employeeId", employeeId);
                 RequestDispatcher dispatcher = request.getRequestDispatcher(success);
                 dispatcher.include(request, response);
             } else {
-                //TODO
+                RequestDispatcher dispatcher = request.getRequestDispatcher(failure);
+                dispatcher.include(request, response);
             }
-        } finally {            
+        } catch(Exception exception){
+            RequestDispatcher dispatcher = request.getRequestDispatcher(failure);
+            dispatcher.include(request, response);
+        } finally {
             out.close();
         }
     }
